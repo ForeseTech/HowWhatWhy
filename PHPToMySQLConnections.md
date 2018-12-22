@@ -81,19 +81,40 @@ I'll explain using a series of steps. We'll then look at each of these steps ind
 1. **Forming A Connection** - We need to first form a connection between the PHP and the MySQL Database. For this, we need to provide the IP address of the SQL server, our database username and database password for that username. We also need to provide the name of the database which we want to use.
 
 ```
-/* Almost always, the default username and password on XAMPP are 'root' and '' (no password). */
-/* The server address is always 'localhost' on XAMPP because both database and PHP file .....
-..... are located on the same comp. */
-
 $server_address="localhost";
 $username="root";
 $password="";
 $dbname="MOCKS";
 
-$CONN=new PDO("mysql:host=$servername;dbname=$dbname",$user,$pass); //No need to understand these lines...
-$CONN->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION); //... just copy and paste.
+$Conn=new PDO("mysql:host=$servername;dbname=$dbname",$user,$pass);
+$Conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 ```
 
-We need to provide connections because otherwise the PDO wouldn't know to which database it should connect the PHP file to. It does this by using IP address of the SQL server, ```$erver_address```. Once this is done, it makes sure the PHP file is authorises to connect to the database using the username and password.
+Almost always, the default username and password on XAMPP are ```root``` and ```""``` (no password). The default IP address is also ```localhost``` because the PHP file and the MySQL database are located on the same server. The database name is a sample name, you'll have to create a database on XAMPP and set the ```$dbname``` to the name of your database.
 
-2. **Writing SQL Statements (Queries)** - We learnt that SQL is a language used for manipulating data in databases, right? So, in SQL, statements which are used to 'retrieve', 'insert' and 'update' data in databases are called *queries*.
+As for the last two lines, just go ahead and copy and paste into your code. It'll take a long time for me to explain that.
+
+This connections is done so that the PDO knows where to find the MySQL databases (using the IP address), tells the MySQL database that it is authorised to use it (using the username and password) and then confirms using the name of the database.
+
+2. **Writing SQL Statements (Queries)** - We learnt that SQL is a language used for manipulating data in databases, right? So, in SQL, statements which are used to 'retrieve', 'insert' and 'update' data in databases are called *queries*. 
+
+Here are a few sample MySQL queries. If you don't understand, I suggest you go back and learn SQL and then learn this section.
+
+```
+
+/* For retrieving data from a database. */
+
+Select USER_NAME, USER_DATEOFBIRTH, USER_PROFILEPICTURE, USER_POSTS from FACEBOOK_DATABASE
+Select EMPLOYEE_ID, EMPLOYEE_NAME, EMPLOYEE_SALARY from EMPLOYEE_DATABASE
+
+/* For inserting data into a database. */
+
+Insert into FACEBOOK_DATABASE values ("Arjun Aravind", "10.01.1998", "profile.jpg", "heyyyyy...blah blah blah")
+Insert into EMPLOYEE_DATABASE values (1234, "Aravind Balakrishnan", 1000000000)
+
+/* For updating data in a database */
+
+UPDATE FACEBOOK_DATABASE set USER_DATEOFBIRTH="22.10.1998" where USER_NAME="Arjun Aravind"
+UPDATE EMPLOYEE_DATABASE set EMPLOYEE_NAME="Aravind B" where EMPLOYEE_NAME="Aravind Balakrishnan"
+
+```
