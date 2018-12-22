@@ -4,7 +4,12 @@
 1. You'll be required to have some basic knowledge of PHP if you want to follow some examples here.
 2. You'll also want to get yourself familiarised with SQL to follow along.
 
-Let's go! We'll start off with some fundamentals.
+### Contents
+
+* [Fundamentals](https://github.com/ForeseTech/HowWhatWhy/blob/master/PHPToMySQLConnections.md#fundamentals) - If you want a basic understanding of how websites function, read this.
+* [Moving To PHP](https://github.com/ForeseTech/HowWhatWhy/blob/master/PHPToMySQLConnections.md#fundamentals) - If you're an impatient little shit and just want to get things done, go to this section.
+
+<br><br>
 
 ## Fundamentals
 
@@ -42,6 +47,8 @@ Back-ends are what enable a website to be dynamic. They get information from the
 
 Hopefully, you've gotten an idea of what the back-end does for our site. Here's a [link](https://careerfoundry.com/en/blog/web-development/whats-the-difference-between-frontend-and-backend/) if you want to understand it better.
 
+<br><br>
+
 ## Moving to PHP
 
 ### Technically speaking, what will PHP do in this Aptitude Test Software?
@@ -63,8 +70,30 @@ SQL stands for Structured Query Language. It is a language which we use to inser
 
 ### So, how do make them work together?
 
-Ahh yes, here is the part where we have to understand some concepts and code a little bit.
+Sometimes, Batman and Robin don't get along and you need Alfred to come and sort things between them. In the same way, PHP and MySQL don't just somehow work together magically, you need to use something called PDO to make them seamlessly work with each other.
 
-I'll explain it in the form of steps. 
+### Okay, fine. What is PDO and how does it work?
 
-1. 
+PDO stands for PHP Data Object. It's some pre-written PHP code which is used for connecting PHP and MySQL. There's no need to install it or whatever, it comes pre-installed with PHP when you install XAMPP.
+
+I'll explain using a series of steps. We'll then look at each of these steps individually later on.
+
+1. **Forming A Connection** - We need to first form a connection between the PHP and the MySQL Database. For this, we need to provide the IP address of the SQL server, our database username and database password for that username. We also need to provide the name of the database which we want to use.
+
+```
+/* Almost always, the default username and password on XAMPP are 'root' and '' (no password). */
+/* The server address is always 'localhost' on XAMPP because both database and PHP file .....
+..... are located on the same comp. */
+
+$server_address="localhost";
+$username="root";
+$password="";
+$dbname="MOCKS";
+
+$CONN=new PDO("mysql:host=$servername;dbname=$dbname",$user,$pass); //No need to understand these lines...
+$CONN->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION); //... just copy and paste.
+```
+
+We need to provide connections because otherwise the PDO wouldn't know to which database it should connect the PHP file to. It does this by using IP address of the SQL server, ```$erver_address```. Once this is done, it makes sure the PHP file is authorises to connect to the database using the username and password.
+
+2. **Writing SQL Statements (Queries)** - We learnt that SQL is a language used for manipulating data in databases, right? So, in SQL, statements which are used to 'retrieve', 'insert' and 'update' data in databases are called *queries*.
