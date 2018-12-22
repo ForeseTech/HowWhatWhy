@@ -78,6 +78,8 @@ PDO stands for PHP Data Object. It's some pre-written PHP code which is used for
 
 I'll explain using a series of steps. We'll then look at each of these steps individually later on.
 
+<br>
+
 1. **Forming A Connection** - We need to first form a connection between the PHP and the MySQL Database. For this, we need to provide the IP address of the SQL server, our database username and database password for that username. We also need to provide the name of the database which we want to use.
 
 ```
@@ -96,6 +98,8 @@ As for the last two lines, just go ahead and copy and paste into your code. It'l
 
 This connections is done so that the PDO knows where to find the MySQL databases (using the IP address), tells the MySQL database that it is authorised to use it (using the username and password) and then confirms using the name of the database.
 
+<br>
+
 2. **Writing SQL Statements (Queries)** - We learnt that SQL is a language used for manipulating data in databases, right? So, in SQL, statements which are used to 'retrieve', 'insert' and 'update' data in databases are called *queries*. 
 
 Here are a few sample MySQL queries. If you don't understand, I suggest you go back and learn SQL and then learn this section.
@@ -109,7 +113,7 @@ Select EMPLOYEE_ID, EMPLOYEE_NAME, EMPLOYEE_SALARY from EMPLOYEE_DATABASE
 
 /* For inserting data into a database. */
 
-Insert into FACEBOOK_DATABASE values ("Arjun Aravind", "10.01.1998", "profile.jpg", "heyyyyy...blah blah blah")
+Insert into FACEBOOK_DATABASE values ("Arjun Aravind", "10.01.1998", "profile.jpg", "heyyyyy...blah blah")
 Insert into EMPLOYEE_DATABASE values (1234, "Aravind Balakrishnan", 1000000000)
 
 /* For updating data in a database */
@@ -118,3 +122,17 @@ UPDATE FACEBOOK_DATABASE set USER_DATEOFBIRTH="22.10.1998" where USER_NAME="Arju
 UPDATE EMPLOYEE_DATABASE set EMPLOYEE_NAME="Aravind B" where EMPLOYEE_NAME="Aravind Balakrishnan"
 
 ```
+
+<br>
+
+3. **Executing MySQL Queries Inside PDO Code** - We can execute MySQL queries inside PDO code. How? Take a look below.
+
+```
+$sql = "UPDATE MyGuests SET lastname='Doe' WHERE id=2";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+```
+
+It seems easy but there's actually a bit more. That example is only if we want to 'update' data in a database.
+
+We have to 'insert', 'retrieve' and 'update' data in a database. So, the code for all these three situations is a bit different. You can use these examples as reference when you're implementing all this.
