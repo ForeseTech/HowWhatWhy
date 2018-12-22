@@ -9,7 +9,7 @@
 * [Fundamentals](https://github.com/ForeseTech/HowWhatWhy/blob/master/PHPToMySQLConnections.md#fundamentals) - If you want a basic understanding of how websites function, read this.
 * [Moving To PHP](https://github.com/ForeseTech/HowWhatWhy/blob/master/PHPToMySQLConnections.md#fundamentals) - If you're an impatient little shit and just want to get things done, go to this section.
 
-<br><br>
+<br>
 
 ## Fundamentals
 
