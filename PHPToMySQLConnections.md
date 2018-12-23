@@ -6,8 +6,10 @@
 
 ### Contents
 
-* [Fundamentals](https://github.com/ForeseTech/HowWhatWhy/blob/master/PHPToMySQLConnections.md#fundamentals) - If you want a basic understanding of how websites function, read this.
-* [Moving To PHP](https://github.com/ForeseTech/HowWhatWhy/blob/master/PHPToMySQLConnections.md#fundamentals) - If you're an impatient little shit and just want to get things done, go to this section.
+* **[Fundamentals](https://github.com/ForeseTech/HowWhatWhy/blob/master/PHPToMySQLConnections.md#fundamentals)** - If you want a basic understanding of how websites function, read this.
+* **[Moving To PHP](https://github.com/ForeseTech/HowWhatWhy/blob/master/PHPToMySQLConnections.md#moving-to-php)** - If you're an impatient little shit and just want to get things done, go to this section.
+* **[Fixing Errors In Your Code](https://github.com/ForeseTech/HowWhatWhy/blob/master/PHPToMySQLConnections.md#fixing-errors-in-your-code)** - If you're stuck with a stupid error.
+* **[Helpful Reference Links](https://github.com/ForeseTech/HowWhatWhy/blob/master/PHPToMySQLConnections.md#helpful-reference-links)** - If this wasn't that helpful, you could always refer these links to understand better.
 
 <br>
 
@@ -29,7 +31,7 @@ The languages used for building a webpage are mainly HTML, CSS and JavaScript. T
 
 *Dynamic* is a term that is used for websites that have information that constantly changes. 
 
-  **For example,** Facebook is a dynamic website because information displayed on the site not only varies from user to user, but also from time to time. On the other hand, my website (www.arjunaravind.com) is static because whoever you are and whenever you see the site, the information remains the same.
+  **For example,** Facebook is a dynamic website because information displayed on the site not only varies from user to user, but also from time to time. On the other hand, my website (www.arjunaravind.in) is static because whoever you are and whenever you see the site, the information remains the same.
 
 Now, let's take Facebook as an example throughout this course so that it's easier for beginners to understand.
 
@@ -68,6 +70,8 @@ PHP's Robin is MySQL. And their Batmobile is XAMPP.
 
 SQL stands for Structured Query Language. It is a language which we use to insert, retrieve and update data in databases. It has various implementations and one of these implementations is MySQL. Think of SQL like Tamil; you have Chennai Tamil, Madurai Tamil and so many other dialects of the same language. Each of these are very similar but have slight modifications. Similarly, MySQL is a *dialect* of SQL and one of the most popular.
 
+All data is stored in a database in the form of tables. If you're not familiar with SQL, please go learn.
+
 ### So, how do make them work together?
 
 Sometimes, Batman and Robin don't get along and you need Alfred to come and sort things between them. In the same way, PHP and MySQL don't just somehow work together magically, you need to use something called PDO to make them seamlessly work with each other.
@@ -100,23 +104,23 @@ This connections is done so that the PDO knows where to find the MySQL databases
 
 <br>
 
-2. **Writing SQL Statements (Queries)** - We learnt that SQL is a language used for manipulating data in databases, right? So, in SQL, statements which are used to 'retrieve', 'insert' and 'update' data in databases are called *queries*. 
+2. **Writing SQL Statements (Queries)** - We learnt that SQL is a language used for manipulating data in database tables, right? So, in SQL, statements which are used to 'retrieve', 'insert' and 'update' data in databases are called *queries*. 
 
 Here are a few sample MySQL queries. If you don't understand, I suggest you go back and learn SQL and then learn this section.
 
 ```
 
-/* For retrieving data from a database. */
+/* For retrieving data from a table. */
 
 Select USER_NAME, USER_DATEOFBIRTH, USER_PROFILEPICTURE, USER_POSTS from FACEBOOK_DATABASE
 Select EMPLOYEE_ID, EMPLOYEE_NAME, EMPLOYEE_SALARY from EMPLOYEE_DATABASE
 
-/* For inserting data into a database. */
+/* For inserting data into a table. */
 
 Insert into FACEBOOK_DATABASE values ("Arjun Aravind", "10.01.1998", "profile.jpg", "heyyyyy...blah blah")
 Insert into EMPLOYEE_DATABASE values (1234, "Aravind Balakrishnan", 1000000000)
 
-/* For updating data in a database */
+/* For updating data in a table. */
 
 UPDATE FACEBOOK_DATABASE set USER_DATEOFBIRTH="22.10.1998" where USER_NAME="Arjun Aravind"
 UPDATE EMPLOYEE_DATABASE set EMPLOYEE_NAME="Aravind B" where EMPLOYEE_NAME="Aravind Balakrishnan"
@@ -127,12 +131,84 @@ UPDATE EMPLOYEE_DATABASE set EMPLOYEE_NAME="Aravind B" where EMPLOYEE_NAME="Arav
 
 3. **Executing MySQL Queries Inside PDO Code** - We can execute MySQL queries inside PDO code. How? Take a look below.
 
+We have to 'insert', 'retrieve' and 'update' data in a database table. So, the code for all these three situations is a bit different. You can use these examples as reference when you're implementing all this.
+
+We also make use of the ```$Conn``` variable that we talked about in Step 1.
+
+**Updating Data in a Table**
+
 ```
 $sql = "UPDATE MyGuests SET lastname='Doe' WHERE id=2";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 ```
 
-It seems easy but there's actually a bit more. That example is only if we want to 'update' data in a database.
+**Retrieving (Selecting) Data from a Table**
 
-We have to 'insert', 'retrieve' and 'update' data in a database. So, the code for all these three situations is a bit different. You can use these examples as reference when you're implementing all this.
+```
+$sql_stmt="SELECT EMPLOYEE_NAME FROM EMPLOYEE_DATABASE";
+	
+$stmt = $conn->query($sql_stmt);
+$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+echo "Names of Employees\n";
+
+foreach ($results as $row) {
+  echo $row['EMPLOYEE_NAME'];
+}
+```
+
+and depending on the contents of the SQL table, the output would be something like
+
+```
+Names of Employees
+
+Arjun
+Aravind
+Adnan
+SA
+...
+...
+Divya
+...
+...
+```
+
+**Inserting Data into a Table**
+
+The code for this is very similar to the code for the updation of data in a table.
+
+```
+$sql_stmt="Insert into EMPLOYEE_DATABASE values (1234, "Aravind Balakrishnan", 1000000000)";
+$sql=$conn->prepare($sql_stmt);
+$sql->execute();
+```
+
+### How do I know if any of this worked?
+Well, for insertion and updation of data, it's always good to see if it worked by going go to the corresponding MySQL Database in XAMPP and seeing if the relevant changes actually worked.
+
+<br><br>
+
+## Fixing Errors In Your Code
+
+So, you'll mostly like be getting a few errors in your PHP code. Trust me, PHP/SQL/PDO almost never works perfectly on the first attempt. Here are some things to go over in case you're stuck.
+
+### Access Denied
+* If you get an error which denies access to the MySQL database, then start off by checking the username and password that you gave for forming the connection. Check if these credentials are the same in the XAMPP MySQL Server too.
+* If those are correct, then double-check the name of the database that you have given. Is this database name the same as the name of the database that you want to use? Are the username/password the correct credentials for this database? Check out all of this.
+
+### Syntax Errors
+* Check if all of the statements end with semi-colons. Yeah, it makes a difference.
+* Check if all of the variables start with the ```$``` symbol.
+* If you're using certain variables multiple times throughout your code, make sure they are spelled the same. PHP doesn't really explicitly tell you if you've gone wrong somewhere.
+
+### SQL Query Sntax
+* Check if your SQL queries are syntactically correct. I recommend you try them on the MySQL console in XAMPP before embedding these queries in your code.
+
+<br><br>
+
+## Helpful Reference Links
+
+* **[Forese Mocks 2018 - MockTestSoftware](https://github.com/ForeseTech/MockTestSoftware)** - This is the version I created. It uses PHP/SQL and PDO too. If you're stuck, you could always see how it was done last year and then try it out yourself.
+* **[W3Schools - Connecting PHP To MySQL](https://www.w3schools.com/php/php_mysql_connect.asp)** - Refer the PDO examples in the tutorials given here. They give examples for various technologies, but you guys should refer the PDO examples.
+* **[Email Your Questions Here](mailto:arjun.aravind1998@gmail.com)** - Click that.
