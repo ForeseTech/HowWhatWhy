@@ -204,6 +204,7 @@ So, you'll mostly like be getting a few errors in your PHP code. Trust me, PHP/S
 
 ### SQL Query Sntax
 * Check if your SQL queries are syntactically correct. I recommend you try them on the MySQL console in XAMPP before embedding these queries in your code.
+* Check if the column names and table names in your SQL queries match the columns and tables present in your MySQL Database Server on XAMPP.
 
 <br><br>
 
